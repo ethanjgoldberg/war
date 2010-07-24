@@ -26,5 +26,5 @@ if __name__ == "__main__":
         GAME.Collide()
         winner = GAME.Win()
         if winner and not won:
-            outfile.write("> Team"+ str(winner)+ "has won the battle.")
+            outfile.writelines(["> Team ", str(winner), "has won the battle."])
             won = True
