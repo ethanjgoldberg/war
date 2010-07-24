@@ -36,7 +36,7 @@ class Game:
         else:
             return 0
         
-    def Write(self):
-        print
+    def Write(self, f):
+        f.write("\n")
         for m in self.movables:
-            m.Write()
+            m.Write(f)

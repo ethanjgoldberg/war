@@ -3,7 +3,7 @@ import math, sys
 
 BUL_POW = 20
 SHIP_POWER = 40
-SHIP_FUEL = 10
+SHIP_FUEL = 100
 
 BULL, SHI1, SHI2 = range(3)
 
@@ -29,8 +29,12 @@ class Movable:
     def Move(self, GAME):
         self.position += self.velocity
 
-    def Write(self):
-        print int(self.position.real), int(self.position.imag), int(self.direction), self.radius, self.i
+    def Write(self, f):
+        f.writelines([str(int(self.position.real))+' ',
+                     str(int(self.position.imag))+' ',
+                     str(int(self.direction))+' ',
+                     str(self.radius)+' ',
+                     str(self.i)+'\n'])
 
 class Bullet(Movable):
     def __init__(self, s, v, l, p):

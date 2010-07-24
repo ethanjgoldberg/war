@@ -1,1 +1,1 @@
-run './war.py > out' and give out to the playback machine
+Run './war.py <outfile>' and give <outfile> to the playback machine ('./pbm.py <outfile>').
