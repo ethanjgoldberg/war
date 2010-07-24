@@ -9,7 +9,7 @@ GAME = Game()
 def Order():
     return Orders(0, 0, 0, 0)
 def Order2():
-    return Orders(0, 1, 1, 20)
+    return Orders(0, 1, 10, 20)
 
 if __name__ == "__main__":
     GAME.AddMovable(m.Ship(200 + 200j, 0j, 0, Order, '1'))

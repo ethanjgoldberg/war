@@ -3,6 +3,7 @@ import math, sys
 
 BUL_POW = 20
 SHIP_POWER = 40
+SHIP_FUEL = 10
 
 BULL, SHI1, SHI2 = range(3)
 
@@ -50,6 +51,7 @@ class Ship(Movable):
         self.Order = o
         self.orders = Orders(0, 0, 0, False)
         self.power = SHIP_POWER
+        self.fuel = SHIP_FUEL
 
     def Move(self, GAME):
         self.Recharge()
@@ -58,13 +60,20 @@ class Ship(Movable):
         
         self.direction += self.orders.left
         self.direction -= self.orders.right
-        self.velocity += self.orders.thrust * ei(self.direction)
+        self.Thrust(self.orders.thrust)
+        
         Movable.Move(self, GAME)
         self.Fire(GAME, self.orders.fire)
 
     def Recharge(self):
         self.power += 1
 
+    def Thrust(self, t):
+        if t > self.fuel or t <= 0:
+            return
+        self.fuel -= t
+        self.velocity += t * ei(self.direction)
+        
     def Fire(self, GAME, l):
         if l > self.power or l <= 0:
             return
