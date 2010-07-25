@@ -10,13 +10,13 @@ GAME = Game()
 def Order():
     return Orders(0, 0, 0, 0)
 def Order2():
-    return Orders(0, 1, 10, 20)
+    return Orders(0, 1, 0.01, 20)
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print "Usage:", sys.argv[0], "<outfile>"
         sys.exit()
-    with outfile as open(sys.argv[1], 'w'):
+    with open(sys.argv[1], 'w') as outfile:
         GAME.AddMovable(m.Ship(200 + 200j, 0j, 0, Order, '1'))
         GAME.AddMovable(m.Ship(350 + 350j, 0j, 0, Order2, '2'))
         won = False
@@ -26,5 +26,5 @@ if __name__ == "__main__":
             GAME.Collide()
             winner = GAME.Win()
             if winner and not won:
-                outfile.writelines(["> Team ", str(winner), "has won the battle."])
+                outfile.writelines(["> Team ", str(winner), " has won the battle."])
                 won = True
