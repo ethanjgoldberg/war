@@ -1,7 +1,13 @@
 from copy import copy
+import Movables
+from cmath import phase
+from math import degrees
+
+def m_dist(m1, m2):
+    return abs(m1.position - m2.position)
 
 def collide(m1, m2):
-    return m1 != m2 and m1 != m2.parent and m1.parent != m2 and abs(m1.position - m2.position) < m1.radius + m2.radius
+    return m1 != m2 and m1 != m2.parent and m1.parent != m2 and m_dist(m1, m2) < m1.radius + m2.radius
 
 class Game:
     def __init__(self):
@@ -18,6 +24,11 @@ class Game:
                 if collide(m, n):
                     mo.remove(m)
         self.movables = mo
+
+    def Sense(self, pos, dist):
+        t = Movables.Sensors(pos, dist)
+        sensed = [((int(m_dist(m, t)), int(degrees(phase(m.position - pos)))), m.Vitals()) for m in self.movables if collide(m, t)]
+        return sensed
 
     def AddMovable(self, m):
         self.movables.append(m)

@@ -4,13 +4,16 @@ import math, sys
 BUL_POW = 20
 SHIP_POWER = 40
 SHIP_FUEL = 100
+SHIP_SENSORS = 500
 
 BULL, SHI1, SHI2 = range(3)
 
 #            SYMB    ID RAD
-movables = {"BULL": (0, 1),
+movables = {"SENS": (-1, 0),
+            "BULL": (0, 1),
             "SHI1": (1, 100),
             "SHI2": (2, 100)}
+            
 
 def ei(x):
     x = math.radians(x)
@@ -28,6 +31,9 @@ class Movable:
         
     def Move(self, GAME):
         self.position += self.velocity
+
+    def Vitals(self):
+        return (self.i, self.velocity, self.direction, self.radius)
 
     def Write(self, f):
         f.writelines([str(int(self.position.real))+' ',
@@ -47,7 +53,12 @@ class Bullet(Movable):
         self.life -= 1
         if not self.life:
             GAME.movables.remove(self)
-        
+
+class Sensors(Movable):
+    def __init__(self, s, r):
+        Movable.__init__(self, s, 0j, 0, "SENS")
+        self.radius = r
+            
 class Ship(Movable):
     def __init__(self, s, v, d, o, t):
         Movable.__init__(self, s, v, d, "SHI"+t)
@@ -56,11 +67,12 @@ class Ship(Movable):
         self.orders = Orders(0, 0, 0, False)
         self.power = SHIP_POWER
         self.fuel = SHIP_FUEL
+        self.sensors = SHIP_SENSORS
 
     def Move(self, GAME):
         self.Recharge()
         
-        self.orders = self.Order()
+        self.orders = self.Order(GAME.Sense(self.position, self.sensors))
         
         self.direction += self.orders.left
         self.direction -= self.orders.right

@@ -7,18 +7,20 @@ import sys
 
 GAME = Game()
 
-def Order():
-    return Orders(0, 0, 0, 0)
-def Order2():
-    return Orders(0, 1, 0.01, 20)
+def Order(sensors):
+    print sensors
+    my = [m for m in sensors if m[0][0] == 0][0][1]
+    if my[2] == 20:
+        return Orders(0,0,0,0)
+    return Orders(0, 1, 0, 0)
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print "Usage:", sys.argv[0], "<outfile>"
         sys.exit()
     with open(sys.argv[1], 'w') as outfile:
-        GAME.AddMovable(m.Ship(200 + 200j, 0j, 0, Order, '1'))
-        GAME.AddMovable(m.Ship(350 + 350j, 0j, 0, Order2, '2'))
+        GAME.AddMovable(m.Ship(-100 + -100j, 0j, 0, Order, '1'))
+        GAME.AddMovable(m.Ship(100 + 100j, 0j, 0, Order, '2'))
         won = False
         for i in range(500):
             GAME.Write(outfile)
