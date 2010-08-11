@@ -16,7 +16,7 @@ def Order(sensors):
     your_team = 3 - my_team
     targets = [m for m in sensors if m[ID] == your_team]
     if not targets:
-        return Orders(1, 0, .01, 0)
+        return Orders(0, 1, .01, 0)
     for target in targets:
         if abs(my[DIRECTION] - target[PHASE]) < 10:
             return Orders(0,0,0,target[DIST])
@@ -27,9 +27,9 @@ if __name__ == "__main__":
         print "Usage:", sys.argv[0], "<outfile>"
         sys.exit()
     with open(sys.argv[1], 'w') as outfile:
-        GAME.AddMovable(mo.Ship(-200 + -250j, 0j, 0, Order, '1'))
-        GAME.AddMovable(mo.Ship(-200 + 0j, 0j, 0, Order, '1'))
-        GAME.AddMovable(mo.Ship(-200 + 250j, 0j, 0, Order, '1'))
+        GAME.AddMovable(mo.Ship(-200 + -250j, 0j, 180, Order, '1'))
+        GAME.AddMovable(mo.Ship(-200 + 0j, 0j, 180, Order, '1'))
+        GAME.AddMovable(mo.Ship(-200 + 250j, 0j, 180, Order, '1'))
         GAME.AddMovable(mo.Ship(200 + -250j, 0j, 0, Order, '2'))
         GAME.AddMovable(mo.Ship(200 + 0j, 0j, 0, Order, '2'))
         GAME.AddMovable(mo.Ship(200 + 250j, 0j, 0, Order, '2'))
