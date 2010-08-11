@@ -3,7 +3,7 @@ import math, sys
 
 BUL_POW = 20
 SHIP_POWER = 400
-SHIP_FUEL = 100
+SHIP_FUEL = 1000
 SHIP_SENSORS = 500
 
 BULL, SHI1, SHI2 = range(3)
@@ -14,7 +14,6 @@ movables = {"SENS": (-1, 0),
             "SHI1": (1, 100),
             "SHI2": (2, 100)}
             
-
 def ei(x):
     x = math.radians(x)
     return math.cos(x) + (math.sin(x) * 1j)
