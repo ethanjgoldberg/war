@@ -2,7 +2,7 @@ from Orders import Orders
 import math, sys
 
 BUL_POW = 20
-SHIP_POWER = 40
+SHIP_POWER = 400
 SHIP_FUEL = 100
 SHIP_SENSORS = 500
 
@@ -33,7 +33,7 @@ class Movable:
         self.position += self.velocity
 
     def Vitals(self):
-        return (self.i, self.velocity, self.direction, self.radius)
+        return (self.i, roundc(self.velocity), self.direction, self.radius)
 
     def Write(self, f):
         f.writelines([str(int(self.position.real))+' ',
@@ -64,7 +64,7 @@ class Ship(Movable):
         Movable.__init__(self, s, v, d, "SHI"+t)
         self.direction = d
         self.Order = o
-        self.orders = Orders(0, 0, 0, False)
+        self.orders = Orders(0, 0, 0, 0)
         self.power = SHIP_POWER
         self.fuel = SHIP_FUEL
         self.sensors = SHIP_SENSORS
