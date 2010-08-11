@@ -30,7 +30,7 @@ class Game:
 
     def Sense(self, pos, dist):
         t = Movables.Sensors(pos, dist)
-        sensed = [m_polar(m, t) + m.Vitals() for m in self.movables if collide(m, t)]
+        sensed = [m_polar(m, t) + m.Vitals() for m in self.movables if m.id != 0 and collide(m, t)]
         return sensed
 
     def AddMovable(self, m):
