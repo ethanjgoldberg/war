@@ -63,7 +63,7 @@ class Ship(Movable):
         Movable.__init__(self, s, v, d, "SHI"+str(t))
         self.direction = d
         self.Order = Orders.order_list[t-1]
-        self.orders = Orders.Orders(0, 0, 0, 0)
+        self.orders = Orders.Orders(0, 0, 0)
         self.power = SHIP_POWER
         self.fuel = SHIP_FUEL
         self.sensors = SHIP_SENSORS
@@ -72,9 +72,8 @@ class Ship(Movable):
         self.Recharge()
         
         self.orders = self.Order(GAME.Sense(self, self.sensors))
-        
-        self.direction += self.orders.left
-        self.direction -= self.orders.right
+
+        self.direction += self.orders.turn
         self.Thrust(self.orders.thrust)
         
         Movable.Move(self, GAME)
