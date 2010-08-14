@@ -8,31 +8,19 @@ import sys
 
 GAME = Game()
 
-DIST, PHASE, ID, VELOCITY, DIRECTION, RADIUS = range(6)
-
-def Order(sensors):
-    my = [m for m in sensors if m[DIST] == 0][0]
-    my_team = my[ID]
-    your_team = 3 - my_team
-    targets = [m for m in sensors if m[ID] == your_team]
-    if not targets:
-        return Orders(0, 1, .01, 0)
-    for target in targets:
-        if abs(my[DIRECTION] - target[PHASE]) < 10:
-            return Orders(0,0,0,target[DIST])
-    return Orders(0, 1, 0, 0)
-
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print "Usage:", sys.argv[0], "<outfile>"
+    if len(sys.argv) != 3:
+        print "Usage:", sys.argv[0], "<setupfile> <outfile>"
         sys.exit()
-    with open(sys.argv[1], 'w') as outfile:
-        GAME.AddMovable(mo.Ship(-200 + -250j, 0j, 180, Order, '1'))
-        GAME.AddMovable(mo.Ship(-200 + 0j, 0j, 180, Order, '1'))
-        GAME.AddMovable(mo.Ship(-200 + 250j, 0j, 180, Order, '1'))
-        GAME.AddMovable(mo.Ship(200 + -250j, 0j, 0, Order, '2'))
-        GAME.AddMovable(mo.Ship(200 + 0j, 0j, 0, Order, '2'))
-        GAME.AddMovable(mo.Ship(200 + 250j, 0j, 0, Order, '2'))
+    with open(sys.argv[1], 'r') as setupfile:
+        for line in setupfile.readlines():
+            if line[0] == '\n':
+                pass
+            elif line[0] == '#':
+                pass
+            else:
+                GAME.AddMovable(apply(mo.Ship, [eval(x) for x in line.split()]))
+    with open(sys.argv[2], 'w') as outfile:
         won = False
         for i in range(1000):
             GAME.Write(outfile)

@@ -1,4 +1,4 @@
-from Orders import Orders
+import Orders
 import math, sys
 
 BUL_POW = 20
@@ -59,11 +59,11 @@ class Sensors(Movable):
         self.radius = r
             
 class Ship(Movable):
-    def __init__(self, s, v, d, o, t):
-        Movable.__init__(self, s, v, d, "SHI"+t)
+    def __init__(self, s, v, d, t):
+        Movable.__init__(self, s, v, d, "SHI"+str(t))
         self.direction = d
-        self.Order = o
-        self.orders = Orders(0, 0, 0, 0)
+        self.Order = Orders.order_list[t-1]
+        self.orders = Orders.Orders(0, 0, 0, 0)
         self.power = SHIP_POWER
         self.fuel = SHIP_FUEL
         self.sensors = SHIP_SENSORS
