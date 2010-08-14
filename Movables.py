@@ -31,8 +31,8 @@ class Movable:
     def Move(self, GAME):
         self.position += self.velocity
 
-    def Vitals(self):
-        return (self.i, roundc(self.velocity), self.direction, self.radius)
+    def Vitals(self, dv):
+        return (self.i, roundc(self.velocity - dv), self.direction, self.radius)
 
     def Write(self, f):
         f.writelines([str(int(self.position.real))+' ',
@@ -54,8 +54,8 @@ class Bullet(Movable):
             GAME.movables.remove(self)
 
 class Sensors(Movable):
-    def __init__(self, s, r):
-        Movable.__init__(self, s, 0j, 0, "SENS")
+    def __init__(self, sh, r):
+        Movable.__init__(self, sh.position, sh.velocity, 0, "SENS")
         self.radius = r
             
 class Ship(Movable):
@@ -71,7 +71,7 @@ class Ship(Movable):
     def Move(self, GAME):
         self.Recharge()
         
-        self.orders = self.Order(GAME.Sense(self.position, self.sensors))
+        self.orders = self.Order(GAME.Sense(self, self.sensors))
         
         self.direction += self.orders.left
         self.direction -= self.orders.right
@@ -81,7 +81,7 @@ class Ship(Movable):
         self.Fire(GAME, self.orders.fire)
 
     def Recharge(self):
-        self.power += 1
+        self.power += 10
 
     def Thrust(self, t):
         if t > self.fuel or t <= 0:

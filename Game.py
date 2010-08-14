@@ -28,9 +28,9 @@ class Game:
                     mo.remove(m)
         self.movables = mo
 
-    def Sense(self, pos, dist):
-        t = Movables.Sensors(pos, dist)
-        sensed = [m_polar(m, t) + m.Vitals() for m in self.movables if m.i != 0 and collide(m, t)]
+    def Sense(self, sh, dist):
+        t = Movables.Sensors(sh, dist)
+        sensed = [m_polar(m, t) + m.Vitals(sh.velocity) for m in self.movables if m.i != 0]# and collide(m, t)] # uncomment to turn on sensor distance
         return sensed
 
     def AddMovable(self, m):
