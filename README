@@ -1,1 +1,3 @@
-Run './war.py <outfile>' and give <outfile> to the playback machine ('./pbm.py <outfile>').
+Run './war.py <setupfile> <outfile>' and give <outfile> to the playback machine ('./pbm.py <outfile>').
+
+Play by editing one of the Order functions found in orders.py
