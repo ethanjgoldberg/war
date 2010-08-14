@@ -1,9 +1,7 @@
 #!/usr/bin/python
 
-from Game import Game
-import Movables as mo
-from Movables import movables
-from Orders import Orders
+from game import Game
+import movables as mo
 import sys
 
 GAME = Game()
