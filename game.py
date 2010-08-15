@@ -16,6 +16,17 @@ def m_polar(m1, m2):
     return (int(m_dist(m1, m2)),
             int(m2.direction - d(m1,m2)))
 
+class Sensor:
+    def __init__(self, d, p, i, v, di, r, po, f):
+        self.dist = d
+        self.phase = p
+        self.id = i
+        self.vel = v
+        self.d = di
+        self.rad = r
+        self.power = po
+        self.fuel = f
+
 class Game:
     def __init__(self):
         self.movables = []
@@ -48,7 +59,7 @@ class Game:
 
     def Sense(self, sh, dist):
         t = movables.Sensors(sh, dist)
-        sensed = [m_polar(m, sh) + m.Vitals(sh) for m in self.movables if m.i != 0]
+        sensed = [apply(Sensor, m_polar(m, sh) + m.Vitals(sh)) for m in self.movables if m.i != 0]
         return sensed
 
     def AddMovable(self, m):
