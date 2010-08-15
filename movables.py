@@ -3,10 +3,8 @@ import math, sys
 
 BUL_POW = 20
 SHIP_POWER = 400
-SHIP_FUEL = 1000
+SHIP_FUEL = 100
 SHIP_SENSORS = 500
-
-BULL, SHI1, SHI2 = range(3)
 
 #            SYMB    ID RAD
 mo_stats = {"SENS": (-1, 0),
@@ -31,8 +29,8 @@ class Movable:
     def Move(self, GAME):
         self.position += self.velocity
 
-    def Vitals(self, dv):
-        return (self.i, roundc(self.velocity - dv), self.direction, self.radius)
+    def Vitals(self, m):
+        return (self.i, roundc(self.velocity - m.velocity), int(self.direction), self.radius, int(self.power), int(self.fuel))
 
     def Write(self, f):
         f.writelines([str(int(self.position.real))+' ',
@@ -63,7 +61,7 @@ class Ship(Movable):
         Movable.__init__(self, s, v, d, "SHI"+str(t))
         self.direction = d
         self.Order = orders.order_list[t-1]
-        self.ord = orders.Orders(0, 0, 0)
+        self.ords = orders.Orders(0, 0, 0)
         self.power = SHIP_POWER
         self.fuel = SHIP_FUEL
         self.sensors = SHIP_SENSORS
@@ -71,22 +69,26 @@ class Ship(Movable):
     def Move(self, GAME):
         self.Recharge()
         
-        self.ord = self.Order(GAME.Sense(self, self.sensors))
+        self.ords = self.Order(GAME.Sense(self, self.sensors))
 
-        self.direction += self.ord.turn
-        self.Thrust(self.ord.thrust)
+        if self.ords.turn > 0:
+            self.direction += min(self.ords.turn, 1)
+        elif self.ords.turn < 0:
+            self.direction += max(self.ords.turn, -1)
+        self.direction %= 360
+        self.Thrust(self.ords.thrust)
         
         Movable.Move(self, GAME)
-        self.Fire(GAME, self.ord.fire)
+        self.Fire(GAME, self.ords.fire)
 
     def Recharge(self):
-        self.power += 10
+        self.power += 2
 
     def Thrust(self, t):
         if t > self.fuel or t <= 0:
             return
-        self.fuel -= t
-        self.velocity += t * ei(self.direction)
+        self.fuel -= t * 0.01
+        self.velocity += t * ei(self.direction) * 0.01
         
     def Fire(self, GAME, l):
         if l > self.power or l <= 0:

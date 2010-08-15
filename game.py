@@ -9,8 +9,12 @@ def m_dist(m1, m2):
 def collide(m1, m2):
     return m1 != m2 and m1 != m2.parent and m1.parent != m2 and m_dist(m1, m2) < m1.radius + m2.radius
 
+def d(a, b):
+    return degrees(phase(a.position - b.position)) % 360
+
 def m_polar(m1, m2):
-    return (int(m_dist(m1, m2)), int(degrees(phase(m1.position - m2.position))) % 360)
+    return (int(m_dist(m1, m2)),
+            int(m2.direction - d(m1,m2)))
 
 class Game:
     def __init__(self):
@@ -22,15 +26,19 @@ class Game:
 
     def Collide(self):
         mo = copy(self.movables)
-        for n in self.movables:
-            for m in self.movables:
+        for n in mo:
+            for m in mo:
                 if collide(m, n):
-                    mo.remove(m)
+                    try:
+                        mo.remove(m)
+                        mo.remove(n)
+                    except ValueError:
+                        pass
         self.movables = mo
 
     def Sense(self, sh, dist):
         t = movables.Sensors(sh, dist)
-        sensed = [m_polar(m, t) + m.Vitals(sh.velocity) for m in self.movables if m.i != 0]# and collide(m, t)] # uncomment to turn on sensor distance
+        sensed = [m_polar(m, sh) + m.Vitals(sh) for m in self.movables if m.i != 0]
         return sensed
 
     def AddMovable(self, m):

@@ -20,7 +20,7 @@ if __name__ == "__main__":
                 GAME.AddMovable(apply(mo.Ship, [eval(x) for x in line.split()]))
     with open(sys.argv[2], 'w') as outfile:
         won = False
-        for i in range(1000):
+        for i in range(2000):
             GAME.Write(outfile)
             GAME.Move()
             GAME.Collide()
