@@ -19,7 +19,17 @@ def m_polar(m1, m2):
 class Game:
     def __init__(self):
         self.movables = []
-        
+
+    def Setup(self, f):
+        with open(f, 'r') as setupfile:
+            for line in setupfile.readlines():
+                if line[0] == '\n':
+                    pass
+                elif line[0] == '#':
+                    pass
+                else:
+                    self.AddMovable(apply(movables.Ship, [eval(x) for x in line.split()]))
+    
     def Move(self):
         for m in self.movables:
             m.Move(self)

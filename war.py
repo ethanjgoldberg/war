@@ -10,14 +10,9 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print "Usage:", sys.argv[0], "<setupfile> <outfile>"
         sys.exit()
-    with open(sys.argv[1], 'r') as setupfile:
-        for line in setupfile.readlines():
-            if line[0] == '\n':
-                pass
-            elif line[0] == '#':
-                pass
-            else:
-                GAME.AddMovable(apply(mo.Ship, [eval(x) for x in line.split()]))
+        
+    GAME.Setup(sys.argv[1])
+    
     with open(sys.argv[2], 'w') as outfile:
         won = False
         for i in range(2000):
