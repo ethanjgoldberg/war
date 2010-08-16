@@ -100,8 +100,8 @@ class Game:
 
     def Collide(self):
         mo = copy(self.movables)
-        for n in mo:
-            for m in mo:
+        for n in self.movables:
+            for m in self.movables:
                 if collide(m, n):
                     try:
                         mo.remove(m)
