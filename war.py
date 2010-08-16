@@ -8,7 +8,7 @@ from players import *
 
 GAME = Game()
 
-order_list = [e.Order,c.Order]
+order_list = [e.Order,e.Order]
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:

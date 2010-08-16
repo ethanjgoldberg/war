@@ -1,7 +1,7 @@
 import orders as o
 
 def Order(sensors):
-    ords = o.Orders(1,0,0)
+    ords = o.Orders(3,0,0)
 
     my = [m for m in sensors if m.dist == 0][0]
     y = 3 - my.id
