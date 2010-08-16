@@ -4,14 +4,18 @@ from game import Game
 import movables as mo
 import sys
 
+from players import *
+
 GAME = Game()
+
+order_list = [e.Order,c.Order]
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print "Usage:", sys.argv[0], "<setupfile> <outfile>"
         sys.exit()
         
-    GAME.Setup(sys.argv[1])
+    GAME.Setup(sys.argv[1], order_list)
     
     with open(sys.argv[2], 'w') as outfile:
         won = False
