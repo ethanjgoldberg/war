@@ -12,7 +12,7 @@ mo_stats = {"SENS": (-1, 0),
             "BULL": (0, 1),
             "SHI1": (1, 100),
             "SHI2": (2, 100)}
-            
+
 def ei(x):
     x = math.radians(x)
     return math.cos(x) + (math.sin(x) * 1j)

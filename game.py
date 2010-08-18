@@ -25,7 +25,6 @@ def collide(m1, m2):
 
     c = dot(ab) - rab*rab
     if c <= 0:
-        print ab, dot(ab)
         return True
 
     a = dot(vab)
@@ -44,18 +43,6 @@ def collide(m1, m2):
     t = plusorminus(bova, sqova)
 
     ret = 0 < t[0] < 1 or 0 < t[1] < 1
-    """if ret:
-        print m1.Vitals(0j)
-        print m2.Vitals(0j)
-        print "vab:\t", vab
-        print "rab:\t", rab
-        print "ab:\t", ab
-        print "a:\t", a
-        print "b:\t", b
-        print "c:\t", c
-        print "disc:\t", disc
-        print "t:\t", t
-        print"""
 
     return ret
 
