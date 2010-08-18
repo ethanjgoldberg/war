@@ -1,5 +1,5 @@
 import orders
-import math, sys
+import cmath, math
 
 BUL_POW = 20
 SHIP_POWER = 400
@@ -15,7 +15,7 @@ mo_stats = {"SENS": (-1, 0),
 
 def ei(x):
     x = math.radians(x)
-    return math.cos(x) + (math.sin(x) * 1j)
+    return cmath.exp(x*1j)
 def roundc(c):
     return round(c.real) + round(c.imag) * 1j
 
@@ -30,8 +30,8 @@ class Movable:
     def Move(self, GAME):
         self.pos += self.vel
 
-    def Vitals(self, dv):
-        return (self.i, roundc(self.vel - dv), int(self.d), self.rad, int(self.power), int(self.fuel))
+    def Vitals(self, sh):
+        return (self.i, roundc((self.vel - sh.vel) * ei(-sh.d)), int(self.d - sh.d), self.rad, int(self.power), int(self.fuel))
 
     def Write(self, f):
         f.writelines([str(int(self.pos.real))+' ',
@@ -86,13 +86,15 @@ class Ship(Movable):
         self.power += 2
 
     def Thrust(self, t):
-        if t > self.fuel or t <= 0:
+        if t <= 0:
             return
+        t = min(t, self.fuel)
         self.fuel -= t * 0.01
         self.vel += t * ei(self.d) * 0.01
         
     def Fire(self, GAME, l):
-        if l > self.power or l <= 0:
+        if l <= 0:
             return
+        l = min(l, self.power)
         self.power -= l
         GAME.AddMovable(Bullet(self.pos, self.vel + (BUL_POW * ei(self.d)), l, self))

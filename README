@@ -1,3 +1,41 @@
 Run './war.py <setupfile> <outfile>' and give <outfile> to the playback machine ('./pbm.py <outfile>').
 
-Play by editing one of the Order functions found in orders.py
+The ships orders are determined by the Order functions, themselves determined by order_list, found in war.py. Only the first two items in order_list are ever used. Change these to the name of the orders functions desired.
+
+The order functions themselves are best defined in players/<player_name>.py, just because that's what I decided is best. You'll need to edit players/__init__.py and tell it to import your player ('import <player_name>' should work). Then, just make one of the entries in order_list point to your desired order function, usually '<player_name>.Order'.
+
+
+Your order function must conform to the following:
+* It accepts one argument, a list of Sensor objects, one per ship in the universe.
+* It returns an Orders object.
+
+
+Sensor objects have the following variables:
+* Sensor.dist: 	    distance from sensing ship to sensed ship.
+* Sensor.phase:	    angle from sensing ship to sensed ship, in degrees.
+* Sensor.id:	    id of the sensed ship (1 or 2, depending on team).
+* Sensor.vel:	    velocity of sensed ship, as a complex number (real=x, imag=y).
+* Sensor.d:	    direction of sensed ship, in degrees.
+* Sensor.rad:	    radius of sensed ship (always 100, for now).
+* Sensor.power:	    power of sensed ship.
+* Sensor.fuel:	    fuel of sensed ship.
+
+dist, phase, vel, and d are all sensed relative to the sensing ship. That is, as though the sensing ship were the origin, and the sensing ships direction were 0 degrees.
+
+Your ship is not given special attention (this may change). To find your ship, you should search for the sensed ship at distance 0.
+
+All numbers are rounded (actually, cast to ints) before being reported. This means that the farther away a ship is, the less accurate the phase is for positioning it absolutely. This is cool!
+
+
+Orders objects have the following variables:
+* Orders.turn: 	    number of degrees to turn.
+* Orders.thrust:    amount to thrust.
+* Orders.fire:	    if true, create a bullet that lasts for a number of frames = fire.
+
+turn is limited to -3 <= turn <= 3.
+
+thrust is unlimited, but the thrust amount is subtracted from your fuel. (Also note: The thrust you give is divided by 100 before the ship deals with it. This makes things simpler, as thrust=1 is a sane amount.)
+
+fire, like thrust, is unlimited, but subtracted from your power. Note that bullets travel at 20 units per frame.
+
+Any order that cannot be completed as ordered, will instead be completed to the best of a ships ability.
