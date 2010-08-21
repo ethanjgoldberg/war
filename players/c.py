@@ -8,6 +8,7 @@ def Order(sensors):
     
     ts = [m for m in sensors if m.id == y and abs(m.phase) < 10]
     if ts:
-        ords.fire = ts[0].dist
+        if my.power * 20 >= ts[0].dist:
+            ords.fire = ts[0].dist
         ords.turn = 0
     return ords
