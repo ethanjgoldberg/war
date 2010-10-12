@@ -3,4 +3,4 @@ class Orders:
         self.turn = tu
         self.thrust = th
         self.fire = f
-
+        self.message = 0

@@ -1,5 +1,6 @@
 import orders
 import cmath, math
+import sensor
 
 BUL_POW = 20
 SHIP_POWER = 400
@@ -18,6 +19,13 @@ def ei(x):
     return cmath.exp(x*1j)
 def roundc(c):
     return round(c.real) + round(c.imag) * 1j
+def d(a, b):
+    return math.degrees(cmath.phase(a.pos - b.pos)) % 360
+def m_polar(m1, m2):
+    return (int(m_dist(m1, m2)),
+            int(m2.d - d(m1,m2)))
+def m_dist(m1, m2):
+    return abs(m1.pos - m2.pos)
 
 class Movable:
     def __init__(self, s, v, d, what):
@@ -31,7 +39,10 @@ class Movable:
         self.pos += self.vel
 
     def Vitals(self, sh):
-        return (self.i, roundc((self.vel - sh.vel) * ei(-sh.d)), int(self.d - sh.d), self.rad, int(self.power), int(self.fuel))
+        if self != sh:
+            return m_polar(self, sh) + (self.i, roundc((self.vel - sh.vel) * ei(-sh.d)), int(self.d - sh.d), self.rad, None, None, None)
+        else:
+            return (0, 0, self.i, 0j, 0, self.rad, int(self.power), int(self.fuel), self.message)
 
     def Write(self, f):
         f.writelines([str(int(self.pos.real))+' ',
@@ -65,12 +76,12 @@ class Ship(Movable):
         self.ords = orders.Orders(0, 0, 0)
         self.power = SHIP_POWER
         self.fuel = SHIP_FUEL
-        self.sensors = SHIP_SENSORS
+        self.message = 0
 
     def Move(self, GAME):
         self.Recharge()
         
-        self.ords = self.Order(GAME.Sense(self, self.sensors))
+        self.ords = self.Order(GAME.Sense(self))
 
         if self.ords.turn > 0:
             self.d += min(self.ords.turn, SHIP_TURN)
@@ -81,6 +92,8 @@ class Ship(Movable):
         
         Movable.Move(self, GAME)
         self.Fire(GAME, self.ords.fire)
+
+        self.message = self.ords.message
 
     def Recharge(self):
         self.power += 2

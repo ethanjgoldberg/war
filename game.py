@@ -1,11 +1,6 @@
 from copy import copy
-import movables
-from cmath import phase
-from math import degrees
+import movables, sensor
 import math
-
-def m_dist(m1, m2):
-    return abs(m1.pos - m2.pos)
 
 def dot(c1, c2=None):
     if c2 == None:
@@ -46,24 +41,6 @@ def collide(m1, m2):
 
     return ret
 
-def d(a, b):
-    return degrees(phase(a.pos - b.pos)) % 360
-
-def m_polar(m1, m2):
-    return (int(m_dist(m1, m2)),
-            int(m2.d - d(m1,m2)))
-
-class Sensor:
-    def __init__(self, d, p, i, v, di, r, po, f):
-        self.dist = d
-        self.phase = p
-        self.id = i
-        self.vel = v
-        self.d = di
-        self.rad = r
-        self.power = po
-        self.fuel = f
-
 class Game:
     def __init__(self):
         self.movables = []
@@ -97,8 +74,8 @@ class Game:
                         pass
         self.movables = mo
 
-    def Sense(self, sh, dist):
-        sensed = [apply(Sensor, m_polar(m, sh) + m.Vitals(sh)) for m in self.movables if m.i != 0]
+    def Sense(self, sh):
+        sensed = [apply(sensor.Sensor, m.Vitals(sh)) for m in self.movables if m.i != 0]
         return sensed
 
     def AddMovable(self, m):

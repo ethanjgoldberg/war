@@ -1,5 +1,7 @@
 import orders as o # Necessary for Orders class.
 
+import math
+
 def Order(sensors): # Order should take sensors as argument
     ords = o.Orders(0,0,0)
     
@@ -19,9 +21,10 @@ def Order(sensors): # Order should take sensors as argument
             target = t 
 
     ords.turn = -target.phase # Turn towards the target.
-    if my.power < target.dist and abs(target.phase) < 10:
-        ords.thrust = max(abs(target.vel), 10) # If we can't shoot 'em, chase 'em.
-    if my.power >= target.dist and abs(target.phase) < 10:
-        ords.fire = target.dist / 20 # If we can shoot 'em, do.
+    if abs(target.phase) < math.degrees(math.asin(float(m.rad) / float(m.dist))):
+        if my.power * 20 < target.dist:
+            ords.thrust = max(abs(target.vel), 10) # If we can't shoot 'em, chase 'em.
+        else:
+            ords.fire = target.dist / 20 # If we can shoot 'em, do.
     
     return ords

@@ -1,14 +1,12 @@
 import orders as o
 
-def Order(sensors):
-    ords = o.Orders(3,0,0)
+import math
 
+def Order(sensors):
     my = [m for m in sensors if m.dist == 0][0]
     y = 3 - my.id
+
+    ords = o.Orders(3,0,0)
     
-    ts = [m for m in sensors if m.id == y and abs(m.phase) < 10]
-    if ts:
-        if my.power * 20 >= ts[0].dist:
-            ords.fire = ts[0].dist
-        ords.turn = 0
+    ts = [m for m in sensors if m.id == y and abs(m.phase) < math.degrees(math.asin(float(m.rad) / float(m.dist)))]
     return ords
