@@ -1,13 +1,13 @@
 ## 3 vs. 3
-## Teams start in corners: team one in top left; team two in bottom right.
+## Teams start in corners: team zero in top left; team one in bottom right.
 
 # Ship setups:
 # position	vel	dir	team
-  -1000-1000j	0j	45	1
-  -1000-500j	0j	90	1
-  -500-1000j	0j	0	1
+  -1000-1000j	0j	45	0
+  -1000-500j	0j	90	0
+  -500-1000j	0j	0	0
 
-  1000+1000j	0j	-135	2
-  1000+500j	0j	180	2
-  500+1000j	0j	-90	2
+  1000+1000j	0j	-135	1
+  1000+500j	0j	180	1
+  500+1000j	0j	-90	1
 

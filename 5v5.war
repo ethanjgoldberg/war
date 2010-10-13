@@ -1,16 +1,16 @@
 ## 5 vs. 5
-## Teams start on sides: team one on left; team two on right.
+## Teams start on sides: team zero on left; team one on right.
 
 # Ship setups:
 # position	vel	dir	team
-  -2000-2000j	0j	0	1
-  -2000-1000j	0j	0	1
-  -2000-0j	0j	0	1
-  -2000+1000j	0j	0	1
-  -2000+2000j	0j	0	1
+  -2000-2000j	0j	0	0
+  -2000-1000j	0j	0	0
+  -2000-0j	0j	0	0
+  -2000+1000j	0j	0	0
+  -2000+2000j	0j	0	0
 
-  2000+2000j	0j	180	2
-  2000+1000j	0j	180	2
-  2000+0j	0j	180	2
-  2000-1000j	0j	180	2
-  2000-2000j	0j	180	2
+  2000+2000j	0j	180	1
+  2000+1000j	0j	180	1
+  2000+0j	0j	180	1
+  2000-1000j	0j	180	1
+  2000-2000j	0j	180	1

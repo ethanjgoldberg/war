@@ -9,10 +9,10 @@ SHIP_SENSORS = 500
 SHIP_TURN = 3
 
 #            SYMB    ID RAD
-mo_stats = {"SENS": (-1, 0),
-            "BULL": (0, 1),
-            "SHI1": (1, 100),
-            "SHI2": (2, 100)}
+mo_stats = {"SENS": (-2, 0),
+            "BULL": (-1, 1),
+            "SHI0": (0, 100),
+            "SHI1": (1, 100)}
 
 def ei(x):
     x = math.radians(x)
@@ -76,7 +76,7 @@ class Ship(Movable):
         self.ords = orders.Orders(0, 0, 0)
         self.power = SHIP_POWER
         self.fuel = SHIP_FUEL
-        self.message = 0
+        self.message = {}
 
     def Move(self, GAME):
         self.Recharge()

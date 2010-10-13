@@ -4,7 +4,7 @@ import math
 
 def Order(sensors):
     my = [m for m in sensors if m.dist == 0][0]
-    y = 3 - my.id
+    y = 1 - my.id
 
     ords = o.Orders(3,0,0)
     

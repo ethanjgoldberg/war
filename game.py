@@ -75,7 +75,7 @@ class Game:
         self.movables = mo
 
     def Sense(self, sh):
-        sensed = [apply(sensor.Sensor, m.Vitals(sh)) for m in self.movables if m.i != 0]
+        sensed = [apply(sensor.Sensor, m.Vitals(sh)) for m in self.movables if m.i != -1]
         return sensed
 
     def AddMovable(self, m):
