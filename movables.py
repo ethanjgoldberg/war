@@ -72,7 +72,7 @@ class Ship(Movable):
     def __init__(self, s, v, d, t, o):
         Movable.__init__(self, s, v, d, "SHI"+str(t))
         self.d = d
-        self.Order = o[t-1]
+        self.Order = o[t]
         self.ords = orders.Orders(0, 0, 0)
         self.power = SHIP_POWER
         self.fuel = SHIP_FUEL
